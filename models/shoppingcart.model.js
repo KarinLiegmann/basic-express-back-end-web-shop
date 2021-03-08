@@ -1,13 +1,18 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
+const shoppingCartSchema = new mongoose.Schema({
+    customerId: { type: Schema.Types.ObjectId, ref: 'Customer' },
+    orderItems: [
+        {
+            productId: { type: Schema.Types.ObjectId, ref: 'Product' },
+            quantity: { type: Number, min: 1 },
+            itemSum: { type: Number, min: 0 },
+        },
+    ],
+    orderSum: { type: Number, required: true, min: 0 },
+});
 
-const shoppingcartSchema = {
-    userId: String,
-    productname: String,
-    price: Number,
-    totalPrice: Number
-};
+const ShoppingCart = mongoose.model('ShoppingCart', shoppingCartSchema);
 
-const Shoppingcart = mongoose.model('Shoppingcart', shoppingcartSchema);
-
-export default Shoppingcart;
+export default ShoppingCart;
